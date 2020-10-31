@@ -8,6 +8,12 @@ public class PlatformerMovement : MonoBehaviour
     public float moveSpeed = 1.0f;
     public float jumpSpeed = 1.0f;
 
+    bool invincible = false;
+    bool invincibleFreeze = false;
+    float invincibleTimer;
+    public float invincibleTime;
+    public float knockback;
+
     bool grounded = false;
     public Transform groundCheck;
     public float checkRadius;
@@ -29,11 +35,13 @@ public class PlatformerMovement : MonoBehaviour
     bool doubleJump = false;
 
     bool dash = false;
+    bool diagDash = false;
     public float dashSpeed;
     bool dashFreeze;
     float dashFreezeTimer;
     public float dashFreezeTime;
-
+    public float diagDashFreezeTime;
+    
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -44,6 +52,25 @@ public class PlatformerMovement : MonoBehaviour
 
     void Update()
     {
+        if (invincible)
+        {
+            Debug.Log(rb.velocity.x + ", " + rb.velocity.y);
+            invincibleTimer += Time.deltaTime;
+            if (invincibleTimer > invincibleTime)
+            {
+                invincible = false;
+                gameObject.layer = 0;
+                invincibleTimer = 0;
+            }
+            else if (invincibleTimer > invincibleTime / 4.5f)
+            {
+                invincibleFreeze = false;
+            }
+            else
+            {
+                rb.velocity = rb.velocity * .99f;
+            }
+        }
         wallTimer += Time.deltaTime;
         if (wallJumpDirection != "")
         {
@@ -58,19 +85,36 @@ public class PlatformerMovement : MonoBehaviour
         if (dashFreeze)
         {
             dashFreezeTimer += Time.deltaTime;
-            if (dashFreezeTimer > dashFreezeTime)
+            if (diagDash)
             {
-                dashFreeze = false;
-                dashFreezeTimer = 0;
-                rb.gravityScale = 1.5f;
+                if (dashFreezeTimer > diagDashFreezeTime)
+                {
+                    dashFreeze = false;
+                    diagDash = false;
+                    dashFreezeTimer = 0;
+                    rb.gravityScale = 1.5f;
+                }
+                else if (dashFreezeTimer > diagDashFreezeTime / 2)
+                {
+                    rb.velocity = new Vector2(0, 0);
+                }
             }
-            else if (dashFreezeTimer > dashFreezeTime / 2)
+            else
             {
-                rb.velocity = new Vector2(0, 0);
+                if (dashFreezeTimer > dashFreezeTime)
+                {
+                    dashFreeze = false;
+                    dashFreezeTimer = 0;
+                    rb.gravityScale = 1.5f;
+                }
+                else if (dashFreezeTimer > dashFreezeTime / 2)
+                {
+                    rb.velocity = new Vector2(0, 0);
+                }
             }
         }
 
-        if (!dashFreeze)
+        if (!dashFreeze && !invincibleFreeze)
         {
             float moveX = Input.GetAxisRaw("Horizontal");
             Vector2 velocity = rb.velocity;
@@ -80,13 +124,13 @@ public class PlatformerMovement : MonoBehaviour
             {
                 rb.AddForce(new Vector2(5, 0));
                 GetComponent<SpriteRenderer>().flipX = false;
-                wallCheck.position = new Vector3(transform.position.x + .3f, transform.position.y, 0);
+                wallCheck.position = new Vector3(transform.position.x + .2f, transform.position.y, 0);
             }
             if (moveX < 0)
             {
                 rb.AddForce(new Vector2(-5, 0));
                 GetComponent<SpriteRenderer>().flipX = true;
-                wallCheck.position = new Vector3(transform.position.x - .3f, transform.position.y, 0);
+                wallCheck.position = new Vector3(transform.position.x - .2f, transform.position.y, 0);
             }
 
             grounded = Physics2D.OverlapCircle(groundCheck.position, checkRadius, isGround);
@@ -144,10 +188,30 @@ public class PlatformerMovement : MonoBehaviour
             }
         }
         
-        if (Input.GetKeyDown(KeyCode.LeftShift) && dash)
+        if (Input.GetKeyDown(KeyCode.LeftShift) && dash && !invincibleFreeze)
         {
             rb.gravityScale = 0;
-            if (Input.GetKey(KeyCode.UpArrow))
+            if (Input.GetKey(KeyCode.UpArrow) && Input.GetKey(KeyCode.RightArrow))
+            {
+                rb.velocity = new Vector2(dashSpeed, dashSpeed);
+                diagDash = true;
+            }
+            else if (Input.GetKey(KeyCode.DownArrow) && Input.GetKey(KeyCode.RightArrow))
+            {
+                rb.velocity = new Vector2(dashSpeed, -dashSpeed);
+                diagDash = true;
+            }
+            else if (Input.GetKey(KeyCode.UpArrow) && Input.GetKey(KeyCode.LeftArrow))
+            {
+                rb.velocity = new Vector2(-dashSpeed, dashSpeed);
+                diagDash = true;
+            }
+            else if (Input.GetKey(KeyCode.DownArrow) && Input.GetKey(KeyCode.LeftArrow))
+            {
+                rb.velocity = new Vector2(-dashSpeed, -dashSpeed);
+                diagDash = true;
+            }
+            else if (Input.GetKey(KeyCode.UpArrow))
             {
                 rb.velocity = new Vector2(0, dashSpeed);
             }
@@ -167,7 +231,22 @@ public class PlatformerMovement : MonoBehaviour
             dashFreeze = true;
         }
     }
+
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.layer > 9 && !invincible)
+        {
+            invincible = true;
+            invincibleFreeze = true;
+            gameObject.layer = 9;
+            if (collision.gameObject.transform.position.x > transform.position.x)
+            {
+                rb.velocity = new Vector2(-knockback, knockback);
+            }
+            else
+            {
+                rb.velocity = new Vector2(knockback, knockback);
+            }
+        }
+    }
 }
-
-
-
