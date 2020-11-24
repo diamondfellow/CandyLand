@@ -41,6 +41,10 @@ public class PlatformerMovement : MonoBehaviour
     float dashFreezeTimer;
     public float dashFreezeTime;
     public float diagDashFreezeTime;
+
+    GameObject movingPlatform;
+
+    public LayerMask enemyLayers;
     
     void Start()
     {
@@ -116,10 +120,27 @@ public class PlatformerMovement : MonoBehaviour
 
         if (!dashFreeze && !invincibleFreeze)
         {
+            movingPlatform = null;
+            Collider2D[] platforms = Physics2D.OverlapCircleAll(groundCheck.transform.position, checkRadius);
+            foreach (Collider2D platform in platforms)
+            {
+                if (movingPlatform == null && platform.gameObject.tag == "MovingPlatform")
+                {
+                    movingPlatform = platform.gameObject;
+                }
+            }
+
             float moveX = Input.GetAxisRaw("Horizontal");
             Vector2 velocity = rb.velocity;
             velocity.x = moveX * moveSpeed;
-            rb.velocity = velocity;
+            if (movingPlatform != null)
+            {
+                rb.velocity = velocity + new Vector2(movingPlatform.GetComponent<Rigidbody2D>().velocity.x, velocity.y - velocity.y);
+            }
+            else
+            {
+                rb.velocity = velocity;
+            }
             if (moveX > 0)
             {
                 rb.AddForce(new Vector2(5, 0));
@@ -134,19 +155,27 @@ public class PlatformerMovement : MonoBehaviour
             }
 
             grounded = Physics2D.OverlapCircle(groundCheck.position, checkRadius, isGround);
+            wall = Physics2D.OverlapCircle(wallCheck.position, checkRadius, isGround);
             if (grounded || wall)
             {
                 doubleJump = true;
                 dash = true;
             }
 
+            if (!grounded && !wall && PlayerPrefs.GetInt("CanDoubleJump") == 1 && doubleJump && Input.GetKeyDown(KeyCode.Z))
+            {
+                rb.velocity = new Vector2(rb.velocity.x, 0);
+                rb.AddForce(new Vector2(0, 100 * jumpSpeed));
+                doubleJump = false;
+            }
+
             if (Input.GetKeyDown(KeyCode.Z) && grounded)
             {
                 rb.velocity = new Vector2(rb.velocity.x, 0);
                 rb.AddForce(new Vector2(0, 100 * jumpSpeed));
+                grounded = false;
             }
-
-            wall = Physics2D.OverlapCircle(wallCheck.position, checkRadius, isGround);
+            
             if (wall)
             {
                 wallTimer = 0;
@@ -179,12 +208,6 @@ public class PlatformerMovement : MonoBehaviour
             if (grounded || wall)
             {
                 doubleJump = true;
-            }
-            if (!grounded && !wall && PlayerPrefs.GetInt("CanDoubleJump") == 1 && doubleJump && Input.GetKeyDown(KeyCode.Z))
-            {
-                rb.velocity = new Vector2(rb.velocity.x, 0);
-                rb.AddForce(new Vector2(0, 100 * jumpSpeed));
-                doubleJump = false;
             }
         }
         
@@ -234,7 +257,7 @@ public class PlatformerMovement : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.layer > 9 && !invincible)
+        if (collision.gameObject.layer == enemyLayers && !invincible)
         {
             invincible = true;
             invincibleFreeze = true;
