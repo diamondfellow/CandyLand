@@ -1,43 +1,25 @@
 fileFormatVersion: 2
-guid: 4e823a0488d02e448b8ad7f5e094748b
+guid: f5cd91c5ee3470b499b07f6e516feb1c
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 7245363763372202157
-    second: gnngnnnnnn_0
+      213: 4472177483661591731
+    second: Gummy_Swamp_Forest_0
   - first:
-      213: -3852897207544442045
-    second: gnngnnnnnn_1
+      213: -957833737919336836
+    second: Gummy_Swamp_Forest_1
   - first:
-      213: 6187151936127200912
-    second: gnngnnnnnn_2
+      213: -4784814113874999477
+    second: Gummy_Swamp_Forest_2
   - first:
-      213: 5189737293814871887
-    second: gnngnnnnnn_0
+      213: 6881320897072170903
+    second: Gummy_Swamp_Forest_3
   - first:
-      213: -3067765353057074413
-    second: gnngnnnnnn_1
+      213: -568212491400158845
+    second: Gummy_Swamp_Forest_4
   - first:
-      213: -6663006986814666917
-    second: gnngnnnnnn_2
-  - first:
-      213: 5087527668031950232
-    second: gnngnnnnnn_3
-  - first:
-      213: -685782141875459235
-    second: gnngnnnnnn_4
-  - first:
-      213: -8634780077289655556
-    second: gnngnnnnnn_5
-  - first:
-      213: -4178404605192644909
-    second: gnngnnnnnn_6
-  - first:
-      213: -3253035400032531775
-    second: gnngnnnnnn_7
-  - first:
-      213: -3609392426993777420
-    second: gnngnnnnnn_8
+      213: 1219233577479541029
+    second: Gummy_Swamp_Forest_5
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -137,13 +119,97 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: gnngnnnnnn_0
+      name: Gummy_Swamp_Forest_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 64
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3b4462e0abd501e30800000000000000
+      internalID: 4472177483661591731
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Gummy_Swamp_Forest_1
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 64
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c7eee694a4715b2f0800000000000000
+      internalID: -957833737919336836
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Gummy_Swamp_Forest_2
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 32
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b47843a1aece89db0800000000000000
+      internalID: -4784814113874999477
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Gummy_Swamp_Forest_3
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 32
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7978577a5ec5f7f50800000000000000
+      internalID: 6881320897072170903
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Gummy_Swamp_Forest_4
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 1980
-        height: 1080
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -151,20 +217,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: da8994884f3bc8460800000000000000
-      internalID: 7245363763372202157
+      spriteID: 3816725efbd4d18f0800000000000000
+      internalID: -568212491400158845
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: gnngnnnnnn_1
+      name: Gummy_Swamp_Forest_5
       rect:
         serializedVersion: 2
-        x: 1980
+        x: 32
         y: 0
-        width: 1980
-        height: 1080
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -172,29 +238,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 343183c3762c78ac0800000000000000
-      internalID: -3852897207544442045
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: gnngnnnnnn_2
-      rect:
-        serializedVersion: 2
-        x: 3960
-        y: 0
-        width: 1980
-        height: 1080
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 09e6b3ca7ed2dd550800000000000000
-      internalID: 6187151936127200912
+      spriteID: 52195eb9a769be010800000000000000
+      internalID: 1219233577479541029
       vertices: []
       indices: 
       edges: []
