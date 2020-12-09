@@ -6,7 +6,7 @@ public class EnemyCombat : Combat
 {
     protected bool searchPlayer;
     public float activationDistance;
-    GameObject player;
+    protected GameObject player;
     // Start is called before the first frame update
     void Start()
     {

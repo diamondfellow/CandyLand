@@ -19,7 +19,11 @@ public class RangeCombat : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //if()
+        
+        if(Vector3.Distance(originalPosition, transform.position) > distance)
+        {
+            Destroy(gameObject);
+        }
         MoveProjectile();
     }
     private void OnCollisionEnter2D(Collision2D collision)
